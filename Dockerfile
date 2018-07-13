@@ -1,4 +1,4 @@
-FROM openshift/nodejs:latest as source
+FROM nodejs:latest as source
 WORKDIR /src/build-your-own-radar
 COPY package.json ./
 RUN npm install
