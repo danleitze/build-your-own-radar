@@ -1,12 +1,15 @@
-FROM node as source
-WORKDIR /src/build-your-own-radar
+FROM nginx:1.13.5
+RUN apt-get update \
+  && apt-get install -y curl gnupg2 build-essential --allow-unauthenticated \
+  && curl -sL https://deb.nodesource.com/setup_10.x | bash - \
+  && apt-get install -y nodejs --allow-unauthenticated
+
+WORKDIR /opt/az-tech-radar
 COPY package.json ./
 RUN npm install
 COPY . ./
 RUN npm run build
 
-FROM nginx:1.13.5
-WORKDIR /opt/build-your-own-radar
-COPY --from source /src/build-your-own-radar/dist .
-COPY default.template /etc/nginx/conf.d/default.conf
+COPY custom-nginx.conf /etc/nginx/conf.d/default.conf
+
 CMD ["nginx", "-g", "daemon off;"]
