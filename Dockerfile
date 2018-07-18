@@ -1,4 +1,4 @@
-FROM openshift/nginx
+FROM openshift/nginx:latest
 RUN apt-get update \
   && apt-get install -y curl gnupg2 build-essential --allow-unauthenticated \
   && curl -sL https://deb.nodesource.com/setup_10.x | bash - \
